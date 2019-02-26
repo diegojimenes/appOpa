@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sun Feb 24 00:49:57 BRT 2019
+#Mon Feb 25 18:18:44 BRT 2019
 56.path=lib/arm64-v8a/libjscexecutor.so
 5.base=C\:\\work\\estacioConecta\\android\\app\\build\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 42.base=C\:\\work\\estacioConecta\\android\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0

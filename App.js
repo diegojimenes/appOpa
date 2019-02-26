@@ -6,6 +6,7 @@ import login from "./views/login";
 import post from "./views/post";
 import aulas from "./views/aulas";
 import aula from "./views/aula";
+import video from "./views/video";
 
 import drawer from "./components/drawer";
 
@@ -30,6 +31,9 @@ const AppNavigator = createDrawerNavigator(
     },
     aula: {
       screen: aula
+    },
+    video: {
+      screen: video
     }
   },
   {

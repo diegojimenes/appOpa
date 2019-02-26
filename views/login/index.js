@@ -27,7 +27,7 @@ class LoginPage extends Component {
             <Label>Password</Label>
             <Input onChangeText={senha => this.setState({ senha })} />
           </Item>
-          <Text>{this.props.loginState}</Text>
+          {/* <Text>{this.props.loginState}</Text> */}
           <Button
             style={styles.button}
             block

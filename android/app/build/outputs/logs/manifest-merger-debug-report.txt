@@ -4,10 +4,12 @@ ADDED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml:1:1-2
 INJECTED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml:1:1-27:12
 INJECTED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml:1:1-27:12
 INJECTED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml:1:1-27:12
+MERGED from [:react-native-video] C:\work\estacioConecta\node_modules\react-native-video\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-gesture-handler] C:\work\estacioConecta\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-vector-icons] C:\work\estacioConecta\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.58.5] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\react-native-0.58.5.aar\49313459ea4f74cfe191f0186d161aee\AndroidManifest.xml:2:1-15:12
 MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\d5508eae10198c337fc334527c77d146\AndroidManifest.xml:17:1-22:12
+MERGED from [com.yqritc:android-scalablevideoview:1.0.4] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\android-scalablevideoview-1.0.4.aar\6fd9bfc62d80414dabcc3a029a2069c2\AndroidManifest.xml:2:1-12:12
 MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\29d0b5f0afa61a9b2a629098b024aa18\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\67696f165260112acc8d42c733bb084d\AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-core-ui:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\support-core-ui-28.0.0.aar\f6a35c62a76c6e582575a6e73bf9eda9\AndroidManifest.xml:17:1-22:12
@@ -122,6 +124,8 @@ uses-sdk
 INJECTED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\work\estacioConecta\android\app\src\main\AndroidManifest.xml
+MERGED from [:react-native-video] C:\work\estacioConecta\node_modules\react-native-video\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-video] C:\work\estacioConecta\node_modules\react-native-video\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] C:\work\estacioConecta\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] C:\work\estacioConecta\node_modules\react-native-gesture-handler\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] C:\work\estacioConecta\node_modules\react-native-vector-icons\android\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:7:5-9:41
@@ -130,6 +134,8 @@ MERGED from [com.facebook.react:react-native:0.58.5] C:\Users\diego jimenes\.gra
 MERGED from [com.facebook.react:react-native:0.58.5] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\react-native-0.58.5.aar\49313459ea4f74cfe191f0186d161aee\AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\d5508eae10198c337fc334527c77d146\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:appcompat-v7:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\appcompat-v7-28.0.0.aar\d5508eae10198c337fc334527c77d146\AndroidManifest.xml:20:5-44
+MERGED from [com.yqritc:android-scalablevideoview:1.0.4] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\android-scalablevideoview-1.0.4.aar\6fd9bfc62d80414dabcc3a029a2069c2\AndroidManifest.xml:8:5-10:41
+MERGED from [com.yqritc:android-scalablevideoview:1.0.4] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\android-scalablevideoview-1.0.4.aar\6fd9bfc62d80414dabcc3a029a2069c2\AndroidManifest.xml:8:5-10:41
 MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\29d0b5f0afa61a9b2a629098b024aa18\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-fragment:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\support-fragment-28.0.0.aar\29d0b5f0afa61a9b2a629098b024aa18\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:animated-vector-drawable:28.0.0] C:\Users\diego jimenes\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-28.0.0.aar\67696f165260112acc8d42c733bb084d\AndroidManifest.xml:20:5-44
