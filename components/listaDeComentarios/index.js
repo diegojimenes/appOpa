@@ -21,63 +21,26 @@ class ListaDeComentarios extends Component {
     return (
       <Content style={{ marginTop: 20 }}>
         <List>
-          <ListItem avatar>
-            <Left>
-              <Thumbnail
-                source={{
-                  uri:
-                    "https://osegredo.com.br/wp-content/uploads/2017/09/O-que-as-pessoas-felizes-t%C3%AAm-em-comum-site-830x450.jpg"
-                }}
-              />
-            </Left>
-            <Body>
-              <Text>Kumar Pratik</Text>
-              <Text note>
-                Doing what you like will always keep you happy . .
-              </Text>
-            </Body>
-            <Right>
-              <Text note>3:43 pm</Text>
-            </Right>
-          </ListItem>
-          <ListItem avatar>
-            <Left>
-              <Thumbnail
-                source={{
-                  uri:
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYIc8W7-NLyEXZXp6JQ82JvoWx6RjANHDBxVzzU61lupNGynQV"
-                }}
-              />
-            </Left>
-            <Body>
-              <Text>Kumar Pratik</Text>
-              <Text note>
-                Doing what you like will always keep you happy . .
-              </Text>
-            </Body>
-            <Right>
-              <Text note>3:43 pm</Text>
-            </Right>
-          </ListItem>
-          <ListItem avatar>
-            <Left>
-              <Thumbnail
-                source={{
-                  uri:
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLdSDIFMOMa_9nZH5vA49Fn0J4zUwMSnehznsCiKXGxChDGWkLuA"
-                }}
-              />
-            </Left>
-            <Body>
-              <Text>Kumar Pratik</Text>
-              <Text note>
-                Doing what you like will always keep you happy . .
-              </Text>
-            </Body>
-            <Right>
-              <Text note>3:43 pm</Text>
-            </Right>
-          </ListItem>
+          {this.props.comments.map(({ comment, img, data, name }) => {
+            return (
+              <ListItem avatar>
+                <Left>
+                  <Thumbnail
+                    source={{
+                      uri: img
+                    }}
+                  />
+                </Left>
+                <Body>
+                  <Text>{name}</Text>
+                  <Text note>{comment}</Text>
+                </Body>
+                <Right>
+                  <Text note>{data}</Text>
+                </Right>
+              </ListItem>
+            );
+          })}
         </List>
       </Content>
     );

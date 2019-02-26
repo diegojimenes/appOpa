@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { Icon } from "native-base";
 import { connect } from "react-redux";
 
 import { config } from "../../config";
@@ -12,7 +13,19 @@ class Cabecalho extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.title}>
+          {this.props.title}{" "}
+          {true ? (
+            <Icon
+              type="FontAwesome"
+              name="check"
+              style={{
+                color: config.colors.checked,
+                fontSize: config.fontSize.menu
+              }}
+            />
+          ) : null}
+        </Text>
         <Text style={styles.description}>{this.props.description}</Text>
         <View style={styles.continerListTags}>
           {this.props.tags.map(e => {
