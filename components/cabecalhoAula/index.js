@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   tag: {
     height: 30,
-    backgroundColor: config.colors.primary,
+    backgroundColor: config.colors.secondary,
     paddingHorizontal: 10,
     marginRight: 10,
     borderRadius: 7,

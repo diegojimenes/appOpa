@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { Form, Label, Input, Text, Button, Item } from "native-base";
 import { connect } from "react-redux";
-
+import { config } from "../../config";
 class AddComentario extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   button: {
+    backgroundColor: config.colors.secondary,
     width: 80,
     position: "absolute",
     right: 10,

@@ -17,6 +17,7 @@ import Notification from "../../components/notifications";
 import VideThumb from "../../components/videoThumb";
 import CabecalhoAula from "../../components/cabecalhoAula";
 import AddComentario from "../../components/addComentario";
+import ListaDeComentarios from "../../components/listaDeComentarios";
 class Aula extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +51,7 @@ class Aula extends Component {
             tags={["tag", "tag", "tag", "tag", "tag"]}
           />
           <AddComentario />
+          <ListaDeComentarios />
         </ScrollView>
       </View>
     );
