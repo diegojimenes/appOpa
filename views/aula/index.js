@@ -4,14 +4,19 @@ import {
   Text,
   TouchableOpacity,
   View,
-  StyleSheet
+  StyleSheet,
+  ImageBackground
 } from "react-native";
+import { Icon } from "native-base";
 import { connect } from "react-redux";
 
 import { config } from "../../config";
 
 import NavBar from "../../components/navbar";
 import Notification from "../../components/notifications";
+import VideThumb from "../../components/videoThumb";
+import CabecalhoAula from "../../components/cabecalhoAula";
+import AddComentario from "../../components/addComentario";
 class Aula extends Component {
   constructor(props) {
     super(props);
@@ -34,25 +39,24 @@ class Aula extends Component {
         />
         <ScrollView style={styles.container}>
           {statusNotifications ? <Notification /> : null}
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("video")}
-          >
-            <View style={styles.video}>
-              <Text>Video</Text>
-            </View>
-          </TouchableOpacity>
+          <VideThumb
+            navigation={this.props.navigation}
+            id={1}
+            url="https://ichef.bbci.co.uk/news/660/cpsprodpb/143B/production/_103197150_classroom.jpg"
+          />
+          <CabecalhoAula
+            title="teste"
+            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
+            tags={["tag", "tag", "tag", "tag", "tag"]}
+          />
+          <AddComentario />
         </ScrollView>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: { height: "90%" },
-  video: {
-    width: "100%",
-    height: 200,
-    backgroundColor: "#899"
-  }
+  container: { height: "90%" }
 });
 const mapStateToProps = state => {
   return {};
