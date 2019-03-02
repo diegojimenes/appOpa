@@ -44,6 +44,11 @@ class Aula extends Component {
       "notifications",
       false
     );
+    const id = this.props.navigation.getParam("id");
+    const title = this.props.navigation.getParam("title");
+    const content = this.props.navigation.getParam("content");
+    const tags = this.props.navigation.getParam("tags");
+    const thumbnail = this.props.navigation.getParam("thumbnail");
     return (
       <View>
         <NavBar
@@ -57,13 +62,9 @@ class Aula extends Component {
           <VideThumb
             navigation={this.props.navigation}
             id={1}
-            url="https://ichef.bbci.co.uk/news/660/cpsprodpb/143B/production/_103197150_classroom.jpg"
+            url={thumbnail}
           />
-          <CabecalhoAula
-            title="teste"
-            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
-            tags={["tag", "tag", "tag", "tag", "tag"]}
-          />
+          <CabecalhoAula title={title} description={content} tags={tags} />
           <AddComentario />
           <ListaDeComentarios comments={this.state.comentarios} />
         </ScrollView>

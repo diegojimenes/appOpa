@@ -7,6 +7,7 @@ import post from "./views/post";
 import aulas from "./views/aulas";
 import aula from "./views/aula";
 import video from "./views/video";
+import quiz from "./views/quiz";
 
 import drawer from "./components/drawer";
 
@@ -34,6 +35,9 @@ const AppNavigator = createDrawerNavigator(
     },
     video: {
       screen: video
+    },
+    quiz: {
+      screen: quiz
     }
   },
   {

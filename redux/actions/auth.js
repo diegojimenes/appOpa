@@ -55,11 +55,11 @@ export const currentUser = () => {
   // alert(TOKEN);
   return dispatch => {
     AsyncStorage.getItem("userToken", (err, TOKEN) => {
-      var config = {
+      var params = {
         headers: { Authorization: "bearer " + TOKEN }
       };
       axios
-        .get(`https://my-adonis-api.herokuapp.com/verificateUser`, config)
+        .get(`${config.api}verificateUser`, params)
         .then(response => {
           var json = JSON.stringify(response.data);
           var par = JSON.parse(json);

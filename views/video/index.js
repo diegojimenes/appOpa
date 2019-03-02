@@ -24,7 +24,10 @@ class video extends Component {
         }}
       >
         {this.state.end ? (
-          <Button style={styles.next} onPress={() => alert("cu")}>
+          <Button
+            style={styles.next}
+            onPress={() => this.props.navigation.navigate("quiz")}
+          >
             <Text style={styles.nextText}>
               Realizar quiz <Icon active name="right" />
             </Text>
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
   },
   next: {
     position: "absolute",
-    zIndex: 1,
+    zIndex: 2,
     right: 0,
     top: "50%"
   },

@@ -9,12 +9,13 @@ export const config = {
     white: "#ffffff",
     text: "#333",
     checked: "#96FCAB",
-    unChecked: "#555"
+    unChecked: "#555",
+    error: "#C62828"
   },
   fontSize: {
     title: 20,
     title2: 25,
-    paragraph: 15,
+    paragraph: 16,
     menu: 20
   }
 };

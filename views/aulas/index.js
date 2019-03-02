@@ -7,12 +7,43 @@ import { config } from "../../config";
 import NavBar from "../../components/navbar";
 import Notification from "../../components/notifications";
 import ItemAula from "../../components/itemAula";
+
+import { get_Aulas } from "../../redux/actions/aulas";
 class Aulas extends Component {
+  componentWillMount() {
+    this.props.get_Aulas();
+  }
+  verificarVizualizacao(id) {
+    var check = this.props.user.videos.filter(e => {
+      return e.video_id === id ? true : false;
+    });
+    return check;
+  }
+  listaDeAulas() {
+    return this.props.aulas.map(
+      ({ title, description, tags, id, thumbnail }) => {
+        var check = this.verificarVizualizacao(id);
+        return (
+          <ItemAula
+            key={id}
+            thumbnail={thumbnail}
+            title={title}
+            check={check.length >= 1 ? true : false}
+            navigation={this.props.navigation}
+            content={description}
+            tags={tags.tags}
+            id={id}
+          />
+        );
+      }
+    );
+  }
   render() {
     const statusNotifications = this.props.navigation.getParam(
       "notifications",
       false
     );
+
     return (
       <View>
         <NavBar
@@ -24,78 +55,7 @@ class Aulas extends Component {
         <ScrollView style={styles.container}>
           {statusNotifications ? <Notification /> : null}
           <View style={styles.timeLine} />
-          <ItemAula
-            title="teste"
-            check={true}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={1}
-          />
-          <ItemAula
-            title="teste"
-            check={true}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2"]}
-            id={2}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1"]}
-            id={3}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={4}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={4}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={4}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={4}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={4}
-          />
-          <ItemAula
-            title="teste"
-            check={false}
-            navigation={this.props.navigation}
-            content="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI"
-            tags={["tag1", "tag2", "tag3", "tag4"]}
-            id={4}
-          />
+          {this.listaDeAulas()}
         </ScrollView>
       </View>
     );
@@ -115,9 +75,12 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = state => {
-  return {};
+  return {
+    aulas: state.aulasReducer.aulas,
+    user: state.authReducer.user
+  };
 };
 export default connect(
   mapStateToProps,
-  null
+  { get_Aulas }
 )(Aulas);

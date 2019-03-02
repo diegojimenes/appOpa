@@ -7,7 +7,14 @@ export default class ItemAula extends Component {
     return (
       <TouchableOpacity
         onPress={() =>
-          this.props.navigation.navigate("aula", { id: this.props.id })
+          this.props.navigation.navigate("aula", {
+            id: this.props.id,
+            check: this.props.check,
+            title: this.props.title,
+            content: this.props.content,
+            tags: this.props.tags,
+            thumbnail: this.props.thumbnail
+          })
         }
         style={styles.container}
       >
@@ -36,7 +43,7 @@ export default class ItemAula extends Component {
           <View style={styles.tags}>
             {this.props.tags.map(tag => {
               return (
-                <View style={styles.tag}>
+                <View style={styles.tag} key={tag + Math.random()}>
                   <Text style={styles.tagText}>{tag}</Text>
                 </View>
               );
