@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
-import { Form, Label, Input, Text, Button, Item } from "native-base";
+import { Form, Label, Input, Text, Button, Item, Icon } from "native-base";
 import { connect } from "react-redux";
 import { config } from "../../config";
 
@@ -31,7 +31,16 @@ class AddComentario extends Component {
             this.setState({ comentario: "" });
           }}
         >
-          <Text style={{ color: "#fff" }}>Comentar</Text>
+          <Text style={{ color: "#fff" }}>
+            <Icon
+              type="FontAwesome"
+              name="angle-double-right"
+              style={{
+                color: config.colors.white,
+                fontSize: config.fontSize.title
+              }}
+            />
+          </Text>
         </Button>
       </Form>
     );

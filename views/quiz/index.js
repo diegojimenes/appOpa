@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 
 import HeaderQuestion from "../../components/headerQuestion";
 import { config } from "../../config";
+import { currentUser } from "../../redux/actions/auth";
 import { finalizarAula } from "../../redux/actions/changePointsAndStatusOfVideo";
 class Quiz extends Component {
   constructor(props) {
@@ -26,8 +27,7 @@ class Quiz extends Component {
       respostaSelecionada: -1,
       tentativas: 0,
       dataAtual: new Date().getTime(),
-      perguntaAtiva: 0,
-      total: 0
+      perguntaAtiva: 0
     };
   }
   // componentWillMount() {
@@ -158,18 +158,19 @@ class Quiz extends Component {
                 <Button
                   active
                   onPress={() => {
+                    var pontos = valorTotal + this.props.user.pontos;
                     Promise.all([
                       this.props.finalizarAula(
-                        valorTotal + this.props.user.dados,
+                        pontos,
                         this.props.user.id,
-                        this.props.aula.id,
-                        this.props.navigation
+                        this.props.aula.id
                       ),
                       this.setState({
                         tentativas: 0,
                         respostaSelecionada: -1,
                         perguntaAtiva: 0
-                      })
+                      }),
+                      this.props.currentUser()
                     ]).then(() => this.props.navigation.navigate("aula"));
                   }}
                 >
@@ -251,5 +252,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { finalizarAula }
+  { finalizarAula, currentUser }
 )(Quiz);

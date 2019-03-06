@@ -44,7 +44,7 @@ class loadScreen extends React.Component {
             />
             <View style={styles.score}>
               <Text>Pontos</Text>
-              <Text>158</Text>
+              <Text>{this.props.user.pontos}</Text>
             </View>
           </View>
         </View>

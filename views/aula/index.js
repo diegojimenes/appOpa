@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 
 import NavBar from "../../components/navbar";
@@ -8,25 +8,35 @@ import VideThumb from "../../components/videoThumb";
 import CabecalhoAula from "../../components/cabecalhoAula";
 import AddComentario from "../../components/addComentario";
 import ListaDeComentarios from "../../components/listaDeComentarios";
+
 import { get_Aula } from "../../redux/actions/aulas";
 class Aula extends Component {
   constructor(props) {
     super(props);
     this.state = {
       vId: this.props.navigation.getParam("id"),
+      lastVId: -1,
       fullscreen: false
     };
   }
-  componentWillMount() {
-    this.props.get_Aula(this.props.navigation.getParam("id"));
-  }
+  // componentWillMount() {}
   verificarVizualizacao(id) {
     var check = this.props.user.videos.filter(e => {
       return e.video_id === id ? true : false;
     });
     return check;
   }
+  getData() {
+    this.props.get_Aula(this.props.navigation.getParam("id"));
+    this.setState({
+      vId: this.props.navigation.getParam("id"),
+      lastVId: this.props.navigation.getParam("id")
+    });
+  }
   render() {
+    if (this.props.navigation.getParam("id") != this.state.lastVId) {
+      this.getData();
+    }
     const statusNotifications = this.props.navigation.getParam(
       "notifications",
       false
@@ -49,6 +59,7 @@ class Aula extends Component {
           back="aulas"
           navigation={this.props.navigation}
         />
+
         <ScrollView style={styles.container}>
           {statusNotifications ? <Notification /> : null}
           <VideThumb
