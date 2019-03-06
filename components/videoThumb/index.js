@@ -11,7 +11,14 @@ import { connect } from "react-redux";
 class VideoThumb extends Component {
   render() {
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate("video")}>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate("video", {
+            video: this.props.video,
+            id: this.props.id
+          })
+        }
+      >
         <ImageBackground
           source={{
             uri: this.props.url

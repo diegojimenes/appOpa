@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 
 import { config } from "../../config";
@@ -10,6 +10,12 @@ import ItemAula from "../../components/itemAula";
 
 import { get_Aulas } from "../../redux/actions/aulas";
 class Aulas extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadContent: true
+    };
+  }
   componentWillMount() {
     this.props.get_Aulas();
   }
@@ -21,18 +27,21 @@ class Aulas extends Component {
   }
   listaDeAulas() {
     return this.props.aulas.map(
-      ({ title, description, tags, id, thumbnail }) => {
+      ({ title, description, tags, id, thumbnail, url, comentarios }) => {
         var check = this.verificarVizualizacao(id);
+
         return (
           <ItemAula
             key={id}
             thumbnail={thumbnail}
             title={title}
+            url={url}
             check={check.length >= 1 ? true : false}
             navigation={this.props.navigation}
             content={description}
             tags={tags.tags}
             id={id}
+            comentarios={comentarios}
           />
         );
       }
@@ -55,6 +64,10 @@ class Aulas extends Component {
         <ScrollView style={styles.container}>
           {statusNotifications ? <Notification /> : null}
           <View style={styles.timeLine} />
+          {/* {this.state.loadContent ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : null} */}
+
           {this.listaDeAulas()}
         </ScrollView>
       </View>

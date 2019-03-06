@@ -1,47 +1,38 @@
 import React, { Component } from "react";
+import { ScrollView, View, StyleSheet, Text } from "react-native";
 import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Alert
-} from "react-native";
-import { Button, Icon } from "native-base";
+  Button,
+  Icon,
+  Card,
+  CardItem,
+  Body,
+  List,
+  ListItem,
+  Left,
+  Right,
+  Footer,
+  FooterTab
+} from "native-base";
 import { connect } from "react-redux";
 
-import NavBar from "../../components/navbar";
-import Notification from "../../components/notifications";
+import HeaderQuestion from "../../components/headerQuestion";
 import { config } from "../../config";
+// import {get_Aula} from '../../redux/actions/aulas'
 class Quiz extends Component {
   constructor(props) {
     super(props);
     this.state = {
       respostaCerta: 0,
       respostaSelecionada: -1,
-      tentativas: 1,
+      tentativas: 0,
       dataAtual: new Date().getTime(),
-      respostas: [
-        {
-          id: 0,
-          text:
-            " Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing"
-        },
-        {
-          id: 1,
-          text: "Lorem Ipsum is simply dummy text of the printing"
-        },
-        {
-          id: 2,
-          text: "Lorem Ipsum is simply dummy text of the printing"
-        },
-        {
-          id: 3,
-          text: "Lorem Ipsum is simply dummy text of the printing"
-        }
-      ]
+      perguntaAtiva: 0,
+      total: 0
     };
   }
+  // componentWillMount() {
+  //   this.props.get_Aula(this.props.navigation.getParam("id"));
+  // }
   render() {
     const statusNotifications = this.props.navigation.getParam(
       "notifications",
@@ -51,24 +42,25 @@ class Quiz extends Component {
     var novaData = new Date(this.state.dataAtual + 10086400);
     var proximaTentativa = `${novaData.getDate()}/${novaData.getMonth() +
       1}/${novaData.getFullYear()}`;
+    var pergunta = this.state.perguntaAtiva;
+    var {
+      question,
+      responseCorrect,
+      responses,
+      valor
+    } = this.props.aula.perguntas[pergunta];
+    var numeroDePerguntas = this.props.aula.perguntas.length - 1;
+    var respostas = Object.values(responses);
     return (
       <View>
-        <NavBar
-          title={"Quiz"}
-          backActive={true}
-          back="video"
-          navigation={this.props.navigation}
-        />
-        <ScrollView style={styles.container}>
-          {statusNotifications ? <Notification /> : null}
-          <View style={styles.question}>
-            <Text style={styles.questionText}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </Text>
-          </View>
+        <View style={styles.container}>
+          <HeaderQuestion
+            userImg={this.props.user.img}
+            user={this.props.user.username}
+            userPontos={156}
+            valor={valor}
+            conteudo={question}
+          />
           <View>
             <Text
               style={{
@@ -76,80 +68,180 @@ class Quiz extends Component {
                 fontSize: config.fontSize.title,
                 marginTop: 20
               }}
-            >{this.state.tentativas > 5 ? null : `Tente outra vez 😉 - ${proximaTentativa}`}</Text>
-            {this.state.respostas.map(({ id, text }) => {
-              return (
-                <TouchableOpacity
-                  key={id}
-                  disabled={this.state.tentativas > 5 ? true : false}
-                  style={styles.resposta}
+            >
+              {this.state.total /* - ${proximaTentativa} */}
+              {this.state.tentativas >= 1
+                ? parseInt(responseCorrect) === this.state.respostaSelecionada
+                  ? `Parabéns 😁`
+                  : `Não foi dessa vez 😔`
+                : null}
+            </Text>
+            <ScrollView>
+              <List>
+                {respostas.map(({ id, text }) => {
+                  return (
+                    <ListItem
+                      key={id}
+                      disabled={this.state.tentativas >= 1 ? true : false}
+                      onPress={() => {
+                        if (this.state.tentativas < 1) {
+                          this.setState({
+                            respostaSelecionada: id,
+                            tentativas: this.state.tentativas + 1
+                          });
+                        }
+                      }}
+                    >
+                      <Left>
+                        <Text
+                          style={{
+                            color: config.colors.text,
+                            fontSize: config.fontSize.paragraph
+                          }}
+                        >
+                          {text}
+                        </Text>
+                      </Left>
+                      <Right>
+                        {id === this.state.respostaSelecionada ? (
+                          parseInt(responseCorrect) ===
+                          this.state.respostaSelecionada ? (
+                            <Icon
+                              type="FontAwesome"
+                              name="check"
+                              style={{
+                                color: config.colors.checked,
+                                fontSize: config.fontSize.menu
+                              }}
+                            />
+                          ) : (
+                            <Icon
+                              type="FontAwesome"
+                              name="times"
+                              style={{
+                                color: config.colors.error,
+                                fontSize: config.fontSize.menu
+                              }}
+                            />
+                          )
+                        ) : null}
+                      </Right>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </ScrollView>
+          </View>
+        </View>
+        <Footer>
+          <FooterTab>
+            <Button
+              active
+              onPress={() => {
+                this.setState({
+                  total: 0,
+                  tentativas: 0,
+                  respostaSelecionada: -1,
+                  perguntaAtiva: 0
+                });
+                this.props.navigation.navigate("aula");
+              }}
+            >
+              <Text style={styles.footerText}>Sair </Text>
+              <Icon active name="arrow-back" />
+            </Button>
+            {this.state.perguntaAtiva >= numeroDePerguntas ? (
+              parseInt(responseCorrect) === this.state.respostaSelecionada ? (
+                <Button
+                  active
                   onPress={() => {
                     this.setState({
-                      respostaSelecionada: id,
-                      tentativas: this.state.tentativas + 1
+                      total: 0,
+                      tentativas: 0,
+                      respostaSelecionada: -1,
+                      perguntaAtiva: 0
+                    });
+                    this.props.navigation.navigate("aula");
+                  }}
+                >
+                  <Text style={styles.footerText}>Concluir </Text>
+                  <Icon type="FontAwesome" name="check" />
+                </Button>
+              ) : (
+                <Button
+                  active={true}
+                  onPress={() => {
+                    this.setState({
+                      total: 0,
+                      tentativas: 0,
+                      respostaSelecionada: -1,
+                      perguntaAtiva: 0
                     });
                   }}
                 >
-                  {id === this.state.respostaSelecionada ? (
-                    this.state.respostaCerta ===
-                    this.state.respostaSelecionada ? (
-                      <Icon
-                        type="FontAwesome"
-                        name="check"
-                        style={{
-                          color: config.colors.checked,
-                          fontSize: config.fontSize.menu
-                        }}
-                      />
-                    ) : (
-                      <Icon
-                        type="FontAwesome"
-                        name="times"
-                        style={{
-                          color: config.colors.error,
-                          fontSize: config.fontSize.menu
-                        }}
-                      />
-                    )
-                  ) : null}
-                  <Text style={styles.respostaText}>{text}</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </ScrollView>
+                  <Text style={styles.footerText}>Reiniciar </Text>
+                  <Icon type="FontAwesome" name="undo" />
+                </Button>
+              )
+            ) : parseInt(responseCorrect) === this.state.respostaSelecionada ? (
+              <Button
+                active={
+                  parseInt(responseCorrect) === this.state.respostaSelecionada
+                    ? true
+                    : false
+                }
+                onPress={() => {
+                  if (
+                    parseInt(responseCorrect) === this.state.respostaSelecionada
+                  ) {
+                    this.setState({
+                      total: this.state.total + valor,
+                      tentativas: 0,
+                      respostaSelecionada: -1,
+                      perguntaAtiva:
+                        this.state.perguntaAtiva >= numeroDePerguntas
+                          ? numeroDePerguntas
+                          : this.state.perguntaAtiva + 1
+                    });
+                  }
+                }}
+              >
+                <Text style={styles.footerText}>Proxima pergunta </Text>
+                <Icon type="FontAwesome" name="arrow-forward" />
+              </Button>
+            ) : (
+              <Button
+                active={true}
+                onPress={() => {
+                  this.setState({
+                    total: 0,
+                    tentativas: 0,
+                    respostaSelecionada: -1,
+                    perguntaAtiva: 0
+                  });
+                }}
+              >
+                <Text style={styles.footerText}>Reiniciar </Text>
+                <Icon type="FontAwesome" name="undo" />
+              </Button>
+            )}
+          </FooterTab>
+        </Footer>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: { height: "90%" },
-  question: {
-    width: "90%",
-    marginLeft: "5%",
-    padding: 5,
-    paddingVertical: 20,
-    marginTop: 20,
-    borderWidth: 1.5,
-    borderRadius: 10,
-    borderColor: config.colors.secondary
-  },
-  questionText: {
-    fontSize: config.fontSize.paragraph
-  },
-  respostaText: {
-    color: config.colors.white
-  },
-  resposta: {
-    backgroundColor: config.colors.primary,
-    width: "100%",
-    marginTop: 20,
-    padding: 10,
-    alignItems: "center"
+  container: { height: "90.4%" },
+  footerText: {
+    color: "#fff"
   }
 });
 const mapStateToProps = state => {
-  return {};
+  return {
+    aula: state.aulasReducer.aula,
+    user: state.authReducer.user
+  };
 };
 export default connect(
   mapStateToProps,

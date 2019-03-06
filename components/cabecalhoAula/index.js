@@ -15,7 +15,7 @@ class Cabecalho extends Component {
       <View style={styles.container}>
         <Text style={styles.title}>
           {this.props.title}{" "}
-          {true ? (
+          {this.props.check ? (
             <Icon
               type="FontAwesome"
               name="check"
@@ -27,15 +27,15 @@ class Cabecalho extends Component {
           ) : null}
         </Text>
         <Text style={styles.description}>{this.props.description}</Text>
-        <View style={styles.continerListTags}>
+        {/* <View style={styles.continerListTags}>
           {this.props.tags.map(e => {
             return (
-              <View style={styles.tag}>
+              <View style={styles.tag} key={e + Math.random()}>
                 <Text style={styles.tagText}>{e}</Text>
               </View>
             );
           })}
-        </View>
+        </View> */}
       </View>
     );
   }

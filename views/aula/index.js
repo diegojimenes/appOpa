@@ -8,47 +8,39 @@ import VideThumb from "../../components/videoThumb";
 import CabecalhoAula from "../../components/cabecalhoAula";
 import AddComentario from "../../components/addComentario";
 import ListaDeComentarios from "../../components/listaDeComentarios";
-
+import { get_Aula } from "../../redux/actions/aulas";
 class Aula extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullscreen: false,
-      comentarios: [
-        {
-          img:
-            "https://osegredo.com.br/wp-content/uploads/2017/09/O-que-as-pessoas-felizes-t%C3%AAm-em-comum-site-830x450.jpg",
-          name: "Jennifer",
-          comment: "Doing what you like will always keep you happy . .",
-          data: "3:43 pm"
-        },
-        {
-          img:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYIc8W7-NLyEXZXp6JQ82JvoWx6RjANHDBxVzzU61lupNGynQV",
-          name: "Jhon",
-          comment: "Doing what you like will always keep you happy . .",
-          data: "3:43 pm"
-        },
-        {
-          img:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLdSDIFMOMa_9nZH5vA49Fn0J4zUwMSnehznsCiKXGxChDGWkLuA",
-          name: "Mario",
-          comment: "Doing what you like will always keep you happy . .",
-          data: "3:43 pm"
-        }
-      ]
+      vId: this.props.navigation.getParam("id"),
+      fullscreen: false
     };
+  }
+  componentWillMount() {
+    this.props.get_Aula(this.props.navigation.getParam("id"));
+  }
+  verificarVizualizacao(id) {
+    var check = this.props.user.videos.filter(e => {
+      return e.video_id === id ? true : false;
+    });
+    return check;
   }
   render() {
     const statusNotifications = this.props.navigation.getParam(
       "notifications",
       false
     );
-    const id = this.props.navigation.getParam("id");
-    const title = this.props.navigation.getParam("title");
-    const content = this.props.navigation.getParam("content");
-    const tags = this.props.navigation.getParam("tags");
-    const thumbnail = this.props.navigation.getParam("thumbnail");
+    const {
+      title,
+      description,
+      tags,
+      thumbnail,
+      url,
+      comentarios,
+      id
+    } = this.props.aula;
+    var check = this.verificarVizualizacao(id);
     return (
       <View>
         <NavBar
@@ -61,12 +53,21 @@ class Aula extends Component {
           {statusNotifications ? <Notification /> : null}
           <VideThumb
             navigation={this.props.navigation}
-            id={1}
+            id={this.state.vId}
             url={thumbnail}
+            video={url}
           />
-          <CabecalhoAula title={title} description={content} tags={tags} />
-          <AddComentario />
-          <ListaDeComentarios comments={this.state.comentarios} />
+          <CabecalhoAula
+            title={title ? title : "title"}
+            description={description ? description : null}
+            tags={[tags ? tags.tags : ["Tag"]]}
+            check={check.length >= 1 ? true : false}
+          />
+          <AddComentario
+            id={this.state.vId}
+            navigation={this.props.navigation}
+          />
+          <ListaDeComentarios comments={comentarios ? comentarios : false} />
         </ScrollView>
       </View>
     );
@@ -76,9 +77,12 @@ const styles = StyleSheet.create({
   container: { height: "90%" }
 });
 const mapStateToProps = state => {
-  return {};
+  return {
+    aula: state.aulasReducer.aula,
+    user: state.authReducer.user
+  };
 };
 export default connect(
   mapStateToProps,
-  null
+  { get_Aula }
 )(Aula);

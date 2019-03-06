@@ -16,6 +16,8 @@ class video extends Component {
   }
 
   render() {
+    const video = this.props.navigation.getParam("video");
+    const id = this.props.navigation.getParam("id");
     return (
       <View
         style={{
@@ -23,22 +25,20 @@ class video extends Component {
           height: "100%"
         }}
       >
-        {this.state.end ? (
-          <Button
-            style={styles.next}
-            onPress={() => this.props.navigation.navigate("quiz")}
-          >
-            <Text style={styles.nextText}>
-              Realizar quiz <Icon active name="right" />
-            </Text>
-          </Button>
-        ) : null}
         <VideoPlayer
           style={styles.container}
           seekColor="#fff"
-          source={{ uri: "https://vjs.zencdn.net/v/oceans.mp4" }}
+          source={{ uri: video }}
           navigator={this.props.navigator}
+          onPressNext={() => this.props.navigation.navigate("quiz", { id })}
+          showNext={this.state.end}
+          nextColor={config.colors.primary}
+          onStart={() => this.setState({ end: !this.state.end })}
           onEnd={() => this.setState({ end: !this.state.end })}
+          nextContent={<Text style={styles.nextText}>
+                        Realizar quiz 
+                        {/* <Icon active name="arrow-right" /> */}
+                      </Text>}
           onBack={() => this.props.navigation.navigate("aula")}
           onEnterFullscreen={() =>
             this.setState({ fullscreen: !this.state.fullscreen })
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   next: {
     position: "absolute",
-    zIndex: 2,
+    zIndex: 1,
     right: 0,
     top: "50%"
   },

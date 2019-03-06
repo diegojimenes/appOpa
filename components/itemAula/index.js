@@ -13,7 +13,9 @@ export default class ItemAula extends Component {
             title: this.props.title,
             content: this.props.content,
             tags: this.props.tags,
-            thumbnail: this.props.thumbnail
+            thumbnail: this.props.thumbnail,
+            url: this.props.url,
+            comentarios: this.props.comentarios
           })
         }
         style={styles.container}

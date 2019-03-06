@@ -3,6 +3,9 @@ import { StyleSheet } from "react-native";
 import { Form, Label, Input, Text, Button, Item } from "native-base";
 import { connect } from "react-redux";
 import { config } from "../../config";
+
+import { send } from "../../redux/actions/comentario";
+import { get_Aula } from "../../redux/actions/aulas";
 class AddComentario extends Component {
   constructor(props) {
     super(props);
@@ -15,8 +18,20 @@ class AddComentario extends Component {
           <Label>Adicionar um comentário</Label>
           <Input onChangeText={comentario => this.setState({ comentario })} />
         </Item>
-        <Button style={styles.button} block onPress={() => {}}>
-          <Text style={{ color: "#fff" }}>Login</Text>
+        <Button
+          style={styles.button}
+          block
+          onPress={() => {
+            this.props.send(
+              this.state.comentario,
+              this.props.user.id,
+              this.props.id
+            );
+            this.props.get_Aula(this.props.id);
+            this.setState({ comentario: "" });
+          }}
+        >
+          <Text style={{ color: "#fff" }}>Comentar</Text>
         </Button>
       </Form>
     );
@@ -32,16 +47,19 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: config.colors.secondary,
-    width: 80,
+    paddingHorizontal: 10,
     position: "absolute",
     right: 10,
     marginTop: 20
   }
 });
 const mapStateToProps = state => {
-  return {};
+  return {
+    status: state.comentario.sendCommentStatus,
+    user: state.authReducer.user
+  };
 };
 export default connect(
   mapStateToProps,
-  null
+  { send, get_Aula }
 )(AddComentario);
