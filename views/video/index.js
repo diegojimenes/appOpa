@@ -18,6 +18,7 @@ class video extends Component {
   render() {
     const video = this.props.navigation.getParam("video");
     const id = this.props.navigation.getParam("id");
+    const check = this.props.navigation.getParam("check");
     return (
       <View
         style={{
@@ -31,14 +32,16 @@ class video extends Component {
           source={{ uri: video }}
           navigator={this.props.navigator}
           onPressNext={() => this.props.navigation.navigate("quiz", { id })}
-          showNext={this.state.end}
+          showNext={this.state.end && !check ? this.state.end : false}
           nextColor={config.colors.primary}
           onStart={() => this.setState({ end: !this.state.end })}
           onEnd={() => this.setState({ end: !this.state.end })}
-          nextContent={<Text style={styles.nextText}>
-                        Realizar quiz 
-                        {/* <Icon active name="arrow-right" /> */}
-                      </Text>}
+          nextContent={
+            <Text style={styles.nextText}>
+              Realizar quiz
+              {/* <Icon active name="arrow-right" /> */}
+            </Text>
+          }
           onBack={() => this.props.navigation.navigate("aula")}
           onEnterFullscreen={() =>
             this.setState({ fullscreen: !this.state.fullscreen })

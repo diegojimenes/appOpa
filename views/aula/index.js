@@ -56,6 +56,7 @@ class Aula extends Component {
             id={this.state.vId}
             url={thumbnail}
             video={url}
+            check={check.length >= 1 ? true : false}
           />
           <CabecalhoAula
             title={title ? title : "title"}

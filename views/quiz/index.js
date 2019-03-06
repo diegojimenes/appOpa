@@ -17,7 +17,7 @@ import { connect } from "react-redux";
 
 import HeaderQuestion from "../../components/headerQuestion";
 import { config } from "../../config";
-// import {get_Aula} from '../../redux/actions/aulas'
+import { finalizarAula } from "../../redux/actions/changePointsAndStatusOfVideo";
 class Quiz extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +51,9 @@ class Quiz extends Component {
     } = this.props.aula.perguntas[pergunta];
     var numeroDePerguntas = this.props.aula.perguntas.length - 1;
     var respostas = Object.values(responses);
+    var valorTotal = this.props.aula.perguntas.reduce((soma, numero) => {
+      return soma + numero.valor;
+    }, 0);
     return (
       <View>
         <View style={styles.container}>
@@ -69,7 +72,6 @@ class Quiz extends Component {
                 marginTop: 20
               }}
             >
-              {this.state.total /* - ${proximaTentativa} */}
               {this.state.tentativas >= 1
                 ? parseInt(responseCorrect) === this.state.respostaSelecionada
                   ? `Parabéns 😁`
@@ -150,18 +152,25 @@ class Quiz extends Component {
               <Text style={styles.footerText}>Sair </Text>
               <Icon active name="arrow-back" />
             </Button>
+
             {this.state.perguntaAtiva >= numeroDePerguntas ? (
               parseInt(responseCorrect) === this.state.respostaSelecionada ? (
                 <Button
                   active
                   onPress={() => {
-                    this.setState({
-                      total: 0,
-                      tentativas: 0,
-                      respostaSelecionada: -1,
-                      perguntaAtiva: 0
-                    });
-                    this.props.navigation.navigate("aula");
+                    Promise.all([
+                      this.props.finalizarAula(
+                        valorTotal + this.props.user.dados,
+                        this.props.user.id,
+                        this.props.aula.id,
+                        this.props.navigation
+                      ),
+                      this.setState({
+                        tentativas: 0,
+                        respostaSelecionada: -1,
+                        perguntaAtiva: 0
+                      })
+                    ]).then(() => this.props.navigation.navigate("aula"));
                   }}
                 >
                   <Text style={styles.footerText}>Concluir </Text>
@@ -172,7 +181,6 @@ class Quiz extends Component {
                   active={true}
                   onPress={() => {
                     this.setState({
-                      total: 0,
                       tentativas: 0,
                       respostaSelecionada: -1,
                       perguntaAtiva: 0
@@ -195,7 +203,6 @@ class Quiz extends Component {
                     parseInt(responseCorrect) === this.state.respostaSelecionada
                   ) {
                     this.setState({
-                      total: this.state.total + valor,
                       tentativas: 0,
                       respostaSelecionada: -1,
                       perguntaAtiva:
@@ -214,7 +221,6 @@ class Quiz extends Component {
                 active={true}
                 onPress={() => {
                   this.setState({
-                    total: 0,
                     tentativas: 0,
                     respostaSelecionada: -1,
                     perguntaAtiva: 0
@@ -245,5 +251,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  null
+  { finalizarAula }
 )(Quiz);

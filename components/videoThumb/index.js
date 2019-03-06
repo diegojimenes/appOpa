@@ -15,7 +15,8 @@ class VideoThumb extends Component {
         onPress={() =>
           this.props.navigation.navigate("video", {
             video: this.props.video,
-            id: this.props.id
+            id: this.props.id,
+            check: this.props.check
           })
         }
       >
