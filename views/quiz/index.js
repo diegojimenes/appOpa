@@ -60,7 +60,7 @@ class Quiz extends Component {
           <HeaderQuestion
             userImg={this.props.user.img}
             user={this.props.user.username}
-            userPontos={156}
+            userPontos={this.props.user.pontos}
             valor={valor}
             conteudo={question}
           />
@@ -171,7 +171,7 @@ class Quiz extends Component {
                         perguntaAtiva: 0
                       }),
                       this.props.currentUser()
-                    ]).then(() => this.props.navigation.navigate("aula"));
+                    ]).then(() => this.props.navigation.navigate("done"));
                   }}
                 >
                   <Text style={styles.footerText}>Concluir </Text>

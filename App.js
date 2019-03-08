@@ -8,6 +8,7 @@ import aulas from "./views/aulas";
 import aula from "./views/aula";
 import video from "./views/video";
 import quiz from "./views/quiz";
+import done from "./views/congratulations";
 
 import drawer from "./components/drawer";
 
@@ -38,6 +39,9 @@ const AppNavigator = createDrawerNavigator(
     },
     quiz: {
       screen: quiz
+    },
+    done: {
+      screen: done
     }
   },
   {

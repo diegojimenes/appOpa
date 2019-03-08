@@ -1,0 +1,28 @@
+{
+  "name": "react-native-video-controls-plus",
+  "version": "0.0.6",
+  "description": "A set of GUI controls for the react-native-video component. fork from (https://github.com/itsnubix/react-native-video-controls)",
+  "license": "MIT",
+  "main": "VideoPlayer.js",
+  "keywords": [
+    "react-native",
+    "react-native-video",
+    "react video controls",
+    "react video player"
+  ],
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 1"
+  },
+  "author": "diegojimenes (https://github.com/diegojimenes)",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:diegojimenes/react-native-video-controls-Plus.git"
+  },
+  "dependencies": {
+    "lodash": "^4.16.4"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.46.0",
+    "react-native-video": "^2.0.0"
+  }
+}

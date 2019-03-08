@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Button, Toast, Icon } from "native-base";
-import VideoPlayer from "react-native-video-controls";
+import VideoPlayer from "react-native-video-controls-plus";
 import { connect } from "react-redux";
 import { config } from "../../config";
 
