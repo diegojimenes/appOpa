@@ -9,6 +9,7 @@ import aula from "./views/aula";
 import video from "./views/video";
 import quiz from "./views/quiz";
 import done from "./views/congratulations";
+import GerenciarAulas from "./views/gerenciarAulas";
 
 import drawer from "./components/drawer";
 
@@ -42,6 +43,9 @@ const AppNavigator = createDrawerNavigator(
     },
     done: {
       screen: done
+    },
+    gerenciarAulas: {
+      screen: GerenciarAulas
     }
   },
   {

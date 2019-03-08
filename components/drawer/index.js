@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { Icon, Button } from "native-base";
 import { config } from "../../config";
@@ -8,6 +8,27 @@ import { logout, currentUser } from "../../redux/actions/auth";
 class loadScreen extends React.Component {
   componentWillMount() {
     this.props.currentUser();
+  }
+  menuParaAdm() {
+    return (
+      <Fragment>
+        <Text
+          style={styles.itemMenu}
+          onPress={() => this.props.navigation.navigate("gerenciarAulas")}
+        >
+          Gerenciar aulas
+        </Text>
+        <Text style={styles.itemMenu} onPress={() => alert("2")}>
+          Nova publicação
+        </Text>
+        <Text style={styles.itemMenu} onPress={() => alert("2")}>
+          Dashboard
+        </Text>
+        <Text style={styles.itemMenu} onPress={() => alert("2")}>
+          alunos
+        </Text>
+      </Fragment>
+    );
   }
   render() {
     return (
@@ -56,6 +77,7 @@ class loadScreen extends React.Component {
           >
             Aulas
           </Text>
+          {this.props.user.isAdmin ? this.menuParaAdm() : null}
           <Text style={styles.itemMenu} onPress={() => alert("2")}>
             Editar perfil
           </Text>
