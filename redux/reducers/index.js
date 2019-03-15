@@ -4,8 +4,10 @@ import { combineReducers } from "redux";
 import authReducer from "./auth";
 import aulasReducer from "./aulas";
 import comentario from "./comentario";
+import postsReducer from "./posts";
 export default combineReducers({
   authReducer,
   aulasReducer,
-  comentario
+  comentario,
+  postsReducer
 });

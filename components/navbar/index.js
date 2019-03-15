@@ -10,6 +10,7 @@ import {
   Title
 } from "native-base";
 import { config } from "../../config";
+
 export default class NavBar extends Component {
   render() {
     const statusNotifications = this.props.navigation.getParam(

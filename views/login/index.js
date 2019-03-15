@@ -4,7 +4,7 @@ import { StyleSheet, Image } from "react-native";
 import { config } from "../../config";
 
 import { connect } from "react-redux";
-import { auth } from "../../redux/actions/auth";
+import { auth, currentUser } from "../../redux/actions/auth";
 class LoginPage extends Component {
   constructor(props) {
     super(props);
@@ -32,11 +32,17 @@ class LoginPage extends Component {
             style={styles.button}
             block
             onPress={() => {
-              this.props.auth(
-                this.state.email,
-                this.state.senha,
-                this.props.navigation
-              );
+              Promise.all([
+                this.props.auth(
+                  this.state.email,
+                  this.state.senha,
+                  this.props.navigation
+                )
+              ]).then(() => {
+                setTimeout(() => {
+                  this.props.currentUser();
+                }, 2000);
+              });
             }}
           >
             <Text>Login</Text>
@@ -71,5 +77,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { auth }
+  { auth, currentUser }
 )(LoginPage);

@@ -1,11 +1,24 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity
+} from "react-native";
+import { Icon } from "native-base";
 import NavBar from "../../components/navbar";
-import PostDestaque from "../../components/postDestaque";
 import { config } from "../../config";
 
 import Notification from "../../components/notifications";
-export default class Post extends React.Component {
+import { connect } from "react-redux";
+import { dellPost, get_Posts } from "../../redux/actions/posts";
+class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { carregando: false };
+  }
   render() {
     const statusNotifications = this.props.navigation.getParam(
       "notifications",
@@ -24,16 +37,80 @@ export default class Post extends React.Component {
           navigation={this.props.navigation}
         >
           {statusNotifications ? <Notification /> : null}
-          <PostDestaque
-            id={1}
-            navigation={this.props.navigation}
-            img="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80"
-            title="test"
-            content="Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy..."
+          <Image
+            style={{ width: "100%", height: 200 }}
+            source={{
+              uri: this.props.post ? this.props.post.img : ""
+            }}
           />
+          <View style={styles.content}>
+            <View style={styles.contentHeader}>
+              <Text style={styles.title}>
+                {this.props.post ? this.props.post.title : ""}
+              </Text>
+              {this.props.user.isAdmin ? (
+                <View style={{ flexDirection: "row", padding: 10 }}>
+                  <TouchableOpacity style={{ marginRight: 20 }}>
+                    <Icon type="FontAwesome" name="edit" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      Promise.all([
+                        this.props.dellPost(this.props.post.id),
+                        this.props.get_Posts()
+                      ]).then(() => {
+                        this.setState({ carregando: true });
+                        setTimeout(() => {
+                          this.setState({
+                            carregando: false
+                          });
+                          this.props.navigation.navigate("main");
+                        }, 3000);
+                      });
+                    }}
+                  >
+                    <Icon type="FontAwesome" name="trash" />
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+
+            <Text style={styles.text}>
+              {this.props.post ? this.props.post.content : ""}
+            </Text>
+          </View>
         </ScrollView>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: config.fontSize.title2,
+    fontWeight: "bold",
+    color: config.colors.text
+  },
+  text: {
+    fontSize: config.fontSize.paragraph,
+    color: config.colors.text
+  },
+  content: {
+    paddingHorizontal: 20
+  },
+  contentHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  }
+});
+const mapStateToProps = state => {
+  return {
+    post: state.postsReducer.post,
+    user: state.authReducer.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { dellPost, get_Posts }
+)(Post);

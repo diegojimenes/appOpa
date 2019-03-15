@@ -10,7 +10,7 @@ import video from "./views/video";
 import quiz from "./views/quiz";
 import done from "./views/congratulations";
 import GerenciarAulas from "./views/gerenciarAulas";
-
+import GerenciarAlunos from "./views/alunos";
 import drawer from "./components/drawer";
 
 const AppNavigator = createDrawerNavigator(
@@ -46,6 +46,9 @@ const AppNavigator = createDrawerNavigator(
     },
     gerenciarAulas: {
       screen: GerenciarAulas
+    },
+    gerenciarAlunos: {
+      screen: GerenciarAlunos
     }
   },
   {

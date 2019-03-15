@@ -45,6 +45,103 @@ export const auth = (email, password, navigation) => {
   };
 };
 
+export const register = (
+  username,
+  email,
+  img,
+  password,
+  isAdmin,
+  polo,
+  nucleo,
+  cpf,
+  fone
+) => {
+  return dispatch => {
+    api({
+      method: "post",
+      url: "register",
+      data: `username=${username}&email=${email}&img=${img}&password=${password}&isAdmin=${isAdmin}&polo=${polo}&nucleo=${nucleo}&cpf=${cpf}&fone=${fone}`
+    })
+      .then(response => {
+        dispatch({
+          type: "NEW_USER",
+          payload: response.data
+        });
+      })
+      .then(() => {})
+      .catch(error => {
+        alert(error);
+        dispatch({
+          type: "ERROR",
+          payload: false
+        });
+      });
+  };
+};
+
+export const update = (username, img, isAdmin, polo, nucleo, cpf, fone, id) => {
+  return dispatch => {
+    AsyncStorage.getItem("userToken", (err, TOKEN) => {
+      api.defaults.headers.common["Authorization"] = "bearer " + TOKEN;
+      api({
+        method: "put",
+        url: `editUser/${id}`,
+        data: `username=${username}&&img=${img}&isAdmin=${isAdmin}&polo=${polo}&nucleo=${nucleo}&cpf=${cpf}&fone=${fone}`
+      })
+        .then(response => {})
+        .then(() => {})
+        .catch(error => {
+          alert(error);
+        });
+    });
+  };
+};
+
+export const get_Users = () => {
+  // alert(TOKEN);
+  return dispatch => {
+    AsyncStorage.getItem("userToken", (err, TOKEN) => {
+      var params = {
+        headers: { Authorization: "bearer " + TOKEN }
+      };
+      axios
+        .get(`${config.api}listUsers`, params)
+        .then(response => {
+          // var json = JSON.stringify(response.data);
+          // var par = JSON.parse(json);
+          // alert(par.username);
+          return dispatch({
+            type: "GET_USERS",
+            payload: response.data
+          });
+        })
+        .catch(error => {
+          dispatch({
+            type: "ERROR",
+            payload: error
+          });
+        });
+    });
+  };
+};
+
+export const dellUser = id => {
+  return dispatch => {
+    AsyncStorage.getItem("userToken", (err, TOKEN) => {
+      api.defaults.headers.common["Authorization"] = "bearer " + TOKEN;
+      api({
+        method: "delete",
+        url: `deleteUser/${id}`
+      })
+        .then(response => {})
+        .then(() => {})
+        .catch(error => {
+          alert(error);
+        });
+    });
+  };
+};
+
 /**
  * @description Função de currentUser verifica se existe um token JWT no local storage, caso exista ela faz uma requisição GET em uma api externa e retorna os dados do usurio logado.
  * @async

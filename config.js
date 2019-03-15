@@ -1,7 +1,7 @@
 export const config = {
   name: "Estacio Conecta",
   logo: "https://i.ibb.co/HTvBd4s/Company-Name.png",
-  api: "http://10.0.2.2:3333/",
+  api: "https://my-adonis-api.herokuapp.com/",
   colors: {
     primary: "#0D47A1",
     secondary: "#1565C0",
@@ -19,3 +19,4 @@ export const config = {
     menu: 20
   }
 };
+// http://10.0.2.2:3333/

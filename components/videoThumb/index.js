@@ -12,13 +12,13 @@ class VideoThumb extends Component {
   render() {
     return (
       <TouchableOpacity
-        onPress={() =>
+        onPress={() => {
           this.props.navigation.navigate("video", {
             video: this.props.video,
             id: this.props.id,
             check: this.props.check
-          })
-        }
+          });
+        }}
       >
         <ImageBackground
           source={{

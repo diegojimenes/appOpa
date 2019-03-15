@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 
@@ -10,6 +10,7 @@ import AddComentario from "../../components/addComentario";
 import ListaDeComentarios from "../../components/listaDeComentarios";
 
 import { get_Aula } from "../../redux/actions/aulas";
+import { config } from "../../config";
 class Aula extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +34,7 @@ class Aula extends Component {
       lastVId: this.props.navigation.getParam("id")
     });
   }
+
   render() {
     if (this.props.navigation.getParam("id") != this.state.lastVId) {
       this.getData();
@@ -48,8 +50,17 @@ class Aula extends Component {
       thumbnail,
       url,
       comentarios,
-      id
+      id,
+      tempo
     } = this.props.aula;
+    // Media de Conclusão
+    var total = 0;
+    var arr = tempo ? tempo : [];
+    arr.map(({ time }) => {
+      total = total + time;
+    });
+    var results = total / arr.length;
+    // end Media de Conclusão
     var check = this.verificarVizualizacao(id);
     return (
       <View>
@@ -75,6 +86,22 @@ class Aula extends Component {
             tags={[tags ? tags.tags : ["Tag"]]}
             check={check.length >= 1 ? true : false}
           />
+          {this.props.user.isAdmin ? (
+            <Fragment>
+              <Text style={{ fontSize: config.fontSize.menu, marginLeft: 10 }}>
+                <Text style={{ color: config.colors.text, fontWeight: "bold" }}>
+                  Media de Conclusão:{" "}
+                </Text>
+                {results.toFixed(3)}s
+              </Text>
+              <Text style={{ fontSize: config.fontSize.menu, marginLeft: 10 }}>
+                <Text style={{ color: config.colors.text, fontWeight: "bold" }}>
+                  Conclusões:{" "}
+                </Text>
+                {arr.length}
+              </Text>
+            </Fragment>
+          ) : null}
           <AddComentario
             id={this.state.vId}
             navigation={this.props.navigation}

@@ -5,6 +5,7 @@ import { config } from "../../config";
 
 import { connect } from "react-redux";
 import { logout, currentUser } from "../../redux/actions/auth";
+import ModalAddPost from "../modalAddPost";
 class loadScreen extends React.Component {
   componentWillMount() {
     this.props.currentUser();
@@ -18,13 +19,14 @@ class loadScreen extends React.Component {
         >
           Gerenciar aulas
         </Text>
-        <Text style={styles.itemMenu} onPress={() => alert("2")}>
-          Nova publicação
-        </Text>
+        <ModalAddPost style={styles.itemMenu} />
         <Text style={styles.itemMenu} onPress={() => alert("2")}>
           Dashboard
         </Text>
-        <Text style={styles.itemMenu} onPress={() => alert("2")}>
+        <Text
+          style={styles.itemMenu}
+          onPress={() => this.props.navigation.navigate("gerenciarAlunos")}
+        >
           alunos
         </Text>
       </Fragment>
@@ -53,7 +55,7 @@ class loadScreen extends React.Component {
           <View style={styles.profileData}>
             <View style={styles.activit}>
               <Text>Atividades</Text>
-              <Text>25%</Text>
+              <Text>0%</Text>
             </View>
             <Image
               style={styles.photo}

@@ -4,7 +4,7 @@ import { Button, Toast, Icon } from "native-base";
 import VideoPlayer from "react-native-video-controls-plus";
 import { connect } from "react-redux";
 import { config } from "../../config";
-
+import { startQuiz } from "../../redux/actions/aulas";
 class video extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +19,8 @@ class video extends Component {
     const video = this.props.navigation.getParam("video");
     const id = this.props.navigation.getParam("id");
     const check = this.props.navigation.getParam("check");
+    const startTime = this.props.navigation.getParam("startTime");
+
     return (
       <View
         style={{
@@ -31,7 +33,10 @@ class video extends Component {
           seekColor="#fff"
           source={{ uri: video }}
           navigator={this.props.navigator}
-          onPressNext={() => this.props.navigation.navigate("quiz", { id })}
+          onPressNext={() => {
+            this.props.startQuiz();
+            this.props.navigation.navigate("quiz", { id });
+          }}
           showNext={this.state.end && !check ? this.state.end : false}
           nextColor={config.colors.primary}
           onStart={() => this.setState({ end: !this.state.end })}
@@ -76,5 +81,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  null
+  { startQuiz }
 )(video);

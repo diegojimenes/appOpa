@@ -4,7 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "limpar": "cd android && gradlew clean && cd ..",
+    "rodar": "react-native run-android",
+    "rodar release": "react-native run-android --variant=release",
+    "instalarRelease": "cd android && ./gradlew installRelease",
+    "gerar": "cd android && gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "axios": "^0.18.0",

@@ -3,9 +3,6 @@ import { ScrollView, View, StyleSheet, Text } from "react-native";
 import {
   Button,
   Icon,
-  Card,
-  CardItem,
-  Body,
   List,
   ListItem,
   Left,
@@ -18,6 +15,7 @@ import { connect } from "react-redux";
 import HeaderQuestion from "../../components/headerQuestion";
 import { config } from "../../config";
 import { currentUser } from "../../redux/actions/auth";
+import { endQuiz, AddTime } from "../../redux/actions/aulas";
 import { finalizarAula } from "../../redux/actions/changePointsAndStatusOfVideo";
 class Quiz extends Component {
   constructor(props) {
@@ -27,12 +25,10 @@ class Quiz extends Component {
       respostaSelecionada: -1,
       tentativas: 0,
       dataAtual: new Date().getTime(),
-      perguntaAtiva: 0
+      perguntaAtiva: 0,
+      start: true
     };
   }
-  // componentWillMount() {
-  //   this.props.get_Aula(this.props.navigation.getParam("id"));
-  // }
   render() {
     const statusNotifications = this.props.navigation.getParam(
       "notifications",
@@ -54,6 +50,7 @@ class Quiz extends Component {
     var valorTotal = this.props.aula.perguntas.reduce((soma, numero) => {
       return soma + numero.valor;
     }, 0);
+
     return (
       <View>
         <View style={styles.container}>
@@ -89,7 +86,8 @@ class Quiz extends Component {
                         if (this.state.tentativas < 1) {
                           this.setState({
                             respostaSelecionada: id,
-                            tentativas: this.state.tentativas + 1
+                            tentativas: this.state.tentativas + 1,
+                            start: false
                           });
                         }
                       }}
@@ -160,6 +158,7 @@ class Quiz extends Component {
                   onPress={() => {
                     var pontos = valorTotal + this.props.user.pontos;
                     Promise.all([
+                      this.props.endQuiz(),
                       this.props.finalizarAula(
                         pontos,
                         this.props.user.id,
@@ -171,7 +170,14 @@ class Quiz extends Component {
                         perguntaAtiva: 0
                       }),
                       this.props.currentUser()
-                    ]).then(() => this.props.navigation.navigate("done"));
+                    ]).then(() => {
+                      this.props.AddTime(
+                        this.props.aula.id,
+                        new Date(this.props.startQuizTime).getSeconds() /
+                          new Date(this.props.endQuizTime).getSeconds()
+                      );
+                      this.props.navigation.navigate("done");
+                    });
                   }}
                 >
                   <Text style={styles.footerText}>Concluir </Text>
@@ -247,10 +253,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     aula: state.aulasReducer.aula,
+    startQuizTime: state.aulasReducer.startQuiz,
+    endQuizTime: state.aulasReducer.endQuiz,
     user: state.authReducer.user
   };
 };
 export default connect(
   mapStateToProps,
-  { finalizarAula, currentUser }
+  { finalizarAula, currentUser, endQuiz, AddTime }
 )(Quiz);

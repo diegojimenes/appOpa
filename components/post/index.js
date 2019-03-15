@@ -1,21 +1,23 @@
 import React from "react";
 import {
   View,
-  Text,
+  // Text,
   Button,
   Image,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import { Text } from "native-base";
 import { config } from "../../config";
 export default class Post extends React.Component {
   render() {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() =>
-          this.props.navigation.navigate("post", { id: this.props.id })
-        }
+        onPress={() => {
+          this.props.action();
+          this.props.navigation.navigate("post", { id: this.props.id });
+        }}
       >
         <Image
           style={{ width: 76, height: 76 }}
@@ -23,7 +25,9 @@ export default class Post extends React.Component {
         />
         <View style={styles.content}>
           <Text style={styles.title}>{this.props.title}</Text>
-          <Text style={styles.text}>{this.props.content}</Text>
+          <Text style={styles.text} note numberOfLines={3}>
+            {this.props.content}
+          </Text>
         </View>
       </TouchableOpacity>
     );

@@ -1,15 +1,17 @@
 import React from "react";
 import { config } from "../../config";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 // buscar parametros da rota
 // this.props.navigation.getParam("id", "defaultValue")
+import { Text } from "native-base";
 export default class PostDestaque extends React.Component {
   render() {
     return (
       <TouchableOpacity
-        onPress={() =>
-          this.props.navigation.navigate("post", { id: this.props.id })
-        }
+        onPress={() => {
+          this.props.action();
+          this.props.navigation.navigate("post", { id: this.props.id });
+        }}
       >
         <Image
           style={{ width: "100%", height: 200 }}
@@ -19,7 +21,9 @@ export default class PostDestaque extends React.Component {
         />
         <View style={styles.content}>
           <Text style={styles.title}>{this.props.title}</Text>
-          <Text style={styles.text}>{this.props.content}</Text>
+          <Text style={styles.text} note numberOfLines={2}>
+            {this.props.content}
+          </Text>
         </View>
       </TouchableOpacity>
     );
