@@ -828,7 +828,13 @@ class GerenciarAulas extends Component {
         </Button>
         <ScrollView style={styles.container}>
           {statusNotifications ? <Notification /> : null}
-          <List>{this.listaDeAulas()}</List>
+          <List>
+            {this.props.aulas.length ? (
+              this.listaDeAulas()
+            ) : (
+              <ActivityIndicator size="large" color={config.colors.primary} />
+            )}
+          </List>
         </ScrollView>
       </View>
     );

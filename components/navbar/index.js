@@ -9,9 +9,25 @@ import {
   Icon,
   Title
 } from "native-base";
+import { BackHandler } from "react-native";
 import { config } from "../../config";
 
 export default class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.backButtonListener = null;
+    this.state = {};
+  }
+  componentDidMount() {
+    this.backButtonListener = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => this.props.navigation.navigate(this.props.back)
+    );
+  }
+  componentWillUnmount() {
+    this.backButtonListener.remove();
+  }
+
   render() {
     const statusNotifications = this.props.navigation.getParam(
       "notifications",

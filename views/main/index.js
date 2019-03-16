@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { View, Text, Button, ScrollView } from "react-native";
+import { View, ScrollView, ActivityIndicator } from "react-native";
 import NavBar from "../../components/navbar";
 import PostDestaque from "../../components/postDestaque";
 import Post from "../../components/post";
@@ -58,7 +58,11 @@ class Home extends React.Component {
           navigation={this.props.navigation}
         >
           {statusNotifications ? <Notification /> : null}
-          {this.renderPosts()}
+          {this.props.posts.length ? (
+            this.renderPosts()
+          ) : (
+            <ActivityIndicator size="large" color={config.colors.primary} />
+          )}
         </ScrollView>
       </View>
     );

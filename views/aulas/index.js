@@ -68,7 +68,11 @@ class Aulas extends Component {
             <ActivityIndicator size="large" color="#0000ff" />
           ) : null} */}
 
-          {this.listaDeAulas()}
+          {this.props.aulas.length ? (
+            this.listaDeAulas()
+          ) : (
+            <ActivityIndicator size="large" color={config.colors.primary} />
+          )}
         </ScrollView>
       </View>
     );

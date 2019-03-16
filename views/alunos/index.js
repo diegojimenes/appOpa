@@ -7,7 +7,8 @@ import {
   Modal,
   Alert,
   TouchableHighlight,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from "react-native";
 import {
   List,
@@ -48,7 +49,7 @@ const options = {
   }
 };
 var { width } = Dimensions.get("window");
-class GerenciarAulas extends Component {
+class Alunos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -397,7 +398,13 @@ class GerenciarAulas extends Component {
         </Button>
         <ScrollView style={styles.container}>
           {statusNotifications ? <Notification /> : null}
-          <List>{this.listaDeAlunos()}</List>
+          <List>
+            {this.props.users.length ? (
+              this.listaDeAlunos()
+            ) : (
+              <ActivityIndicator size="large" color={config.colors.primary} />
+            )}
+          </List>
         </ScrollView>
       </View>
     );
@@ -435,8 +442,8 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
   return {
-    aulas: state.aulasReducer.aulas,
-    aula: state.aulasReducer.aula,
+    // aulas: state.aulasReducer.aulas,
+    // aula: state.aulasReducer.aula,
     users: state.authReducer.users,
     newQuestionId: state.aulasReducer.NewQuestionId
   };
@@ -449,4 +456,4 @@ export default connect(
     dellUser,
     update
   }
-)(GerenciarAulas);
+)(Alunos);
