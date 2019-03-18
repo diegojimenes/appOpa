@@ -5,6 +5,7 @@ export const config = {
   colors: {
     primary: "#0D47A1",
     secondary: "#1565C0",
+    tertiary: "#BBDEFB",
     background: "#448AFF",
     white: "#ffffff",
     text: "#333",
@@ -20,3 +21,4 @@ export const config = {
   }
 };
 // http://10.0.2.2:3333/
+// https://my-adonis-api.herokuapp.com/

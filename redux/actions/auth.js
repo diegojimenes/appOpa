@@ -125,6 +125,34 @@ export const get_Users = () => {
   };
 };
 
+export const get_Ranking = () => {
+  // alert(TOKEN);
+  return dispatch => {
+    AsyncStorage.getItem("userToken", (err, TOKEN) => {
+      var params = {
+        headers: { Authorization: "bearer " + TOKEN }
+      };
+      axios
+        .get(`${config.api}ranking`, params)
+        .then(response => {
+          // var json = JSON.stringify(response.data);
+          // var par = JSON.parse(json);
+          // alert(par.username);
+          return dispatch({
+            type: "GET_RANKING",
+            payload: response.data
+          });
+        })
+        .catch(error => {
+          dispatch({
+            type: "ERROR",
+            payload: error
+          });
+        });
+    });
+  };
+};
+
 export const dellUser = id => {
   return dispatch => {
     AsyncStorage.getItem("userToken", (err, TOKEN) => {

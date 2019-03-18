@@ -44,7 +44,7 @@ import {
   dellPergunta,
   EditPergunta
 } from "../../redux/actions/aulas";
-
+import { sendNotification } from "../../redux/actions/notificate";
 import ImagePicker from "react-native-image-picker";
 
 const options = {
@@ -768,10 +768,14 @@ class GerenciarAulas extends Component {
                           "https://vjs.zencdn.net/v/oceans.mp4"
                         ),
                         setTimeout(() => {
+                          this.props.sendNotification(
+                            "Nova aula",
+                            this.state.title,
+                            { id: this.props.newQuestionId }
+                          );
                           this.setState({
                             id: this.props.newQuestionId,
-                            formModal: !this.state.formModal,
-                            enviandoPergunta: true
+                            formModal: !this.state.formModal
                           });
                         }, 2000)
                       ]).then(() => {
@@ -827,7 +831,9 @@ class GerenciarAulas extends Component {
           <Text style={{ color: "#fff" }}>Adicionar Aula</Text>
         </Button>
         <ScrollView style={styles.container}>
-          {statusNotifications ? <Notification /> : null}
+          {statusNotifications ? (
+            <Notification navigation={this.props.navigation} />
+          ) : null}
           <List>
             {this.props.aulas.length ? (
               this.listaDeAulas()
@@ -888,6 +894,7 @@ export default connect(
     dellAula,
     AddPergunta,
     dellPergunta,
-    EditPergunta
+    EditPergunta,
+    sendNotification
   }
 )(GerenciarAulas);

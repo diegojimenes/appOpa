@@ -397,7 +397,9 @@ class Alunos extends Component {
           <Text style={{ color: "#fff" }}>Cadastrar Aluno</Text>
         </Button>
         <ScrollView style={styles.container}>
-          {statusNotifications ? <Notification /> : null}
+          {statusNotifications ? (
+            <Notification navigation={this.props.navigation} />
+          ) : null}
           <List>
             {this.props.users.length ? (
               this.listaDeAlunos()

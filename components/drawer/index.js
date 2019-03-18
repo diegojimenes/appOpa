@@ -1,11 +1,13 @@
 import React, { Fragment } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
 import { Icon, Button } from "native-base";
 import { config } from "../../config";
 
 import { connect } from "react-redux";
 import { logout, currentUser } from "../../redux/actions/auth";
 import ModalAddPost from "../modalAddPost";
+import ModalRanking from "../modalRanking";
+import ModalEditUser from "../modalEditUser";
 class loadScreen extends React.Component {
   componentWillMount() {
     this.props.currentUser();
@@ -20,9 +22,10 @@ class loadScreen extends React.Component {
           Gerenciar aulas
         </Text>
         <ModalAddPost style={styles.itemMenu} />
-        <Text style={styles.itemMenu} onPress={() => alert("2")}>
+
+        {/* <Text style={styles.itemMenu} onPress={() => alert("2")}>
           Dashboard
-        </Text>
+        </Text> */}
         <Text
           style={styles.itemMenu}
           onPress={() => this.props.navigation.navigate("gerenciarAlunos")}
@@ -72,26 +75,27 @@ class loadScreen extends React.Component {
           </View>
         </View>
         {/* Menu */}
-        <View style={styles.menu}>
-          <Text
-            style={styles.itemMenu}
-            onPress={() => this.props.navigation.navigate("aulas")}
-          >
-            Aulas
-          </Text>
-          {this.props.user.isAdmin ? this.menuParaAdm() : null}
-          <Text style={styles.itemMenu} onPress={() => alert("2")}>
-            Editar perfil
-          </Text>
-          <Text
-            style={styles.itemMenu}
-            onPress={() => {
-              this.props.logout(this.props.navigation);
-            }}
-          >
-            Sair
-          </Text>
-        </View>
+        <ScrollView>
+          <View style={styles.menu}>
+            <Text
+              style={styles.itemMenu}
+              onPress={() => this.props.navigation.navigate("aulas")}
+            >
+              Aulas
+            </Text>
+            <ModalRanking style={styles.itemMenu} />
+            {this.props.user.isAdmin ? this.menuParaAdm() : null}
+            <ModalEditUser style={styles.itemMenu} />
+            <Text
+              style={styles.itemMenu}
+              onPress={() => {
+                this.props.logout(this.props.navigation);
+              }}
+            >
+              Sair
+            </Text>
+          </View>
+        </ScrollView>
       </View>
     );
   }

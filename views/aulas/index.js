@@ -62,7 +62,9 @@ class Aulas extends Component {
           navigation={this.props.navigation}
         />
         <ScrollView style={styles.container}>
-          {statusNotifications ? <Notification /> : null}
+          {statusNotifications ? (
+            <Notification navigation={this.props.navigation} />
+          ) : null}
           <View style={styles.timeLine} />
           {/* {this.state.loadContent ? (
             <ActivityIndicator size="large" color="#0000ff" />

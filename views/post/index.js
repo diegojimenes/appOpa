@@ -36,7 +36,9 @@ class Post extends React.Component {
           style={{ height: "90%" }}
           navigation={this.props.navigation}
         >
-          {statusNotifications ? <Notification /> : null}
+          {statusNotifications ? (
+            <Notification navigation={this.props.navigation} />
+          ) : null}
           <Image
             style={{ width: "100%", height: 200 }}
             source={{

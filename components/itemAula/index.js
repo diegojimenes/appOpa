@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon } from "native-base";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Icon, Text } from "native-base";
 import { config } from "../../config";
 export default class ItemAula extends Component {
   render() {
@@ -41,7 +41,9 @@ export default class ItemAula extends Component {
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>{this.props.title}</Text>
-          <Text style={styles.text}>{this.props.content}</Text>
+          <Text style={styles.text} note numberOfLines={3}>
+            {this.props.content}
+          </Text>
           <View style={styles.tags}>
             {this.props.tags.map(tag => {
               return (

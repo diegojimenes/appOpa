@@ -72,7 +72,9 @@ class Aula extends Component {
         />
 
         <ScrollView style={styles.container}>
-          {statusNotifications ? <Notification /> : null}
+          {statusNotifications ? (
+            <Notification navigation={this.props.navigation} />
+          ) : null}
           <VideThumb
             navigation={this.props.navigation}
             id={this.state.vId}
